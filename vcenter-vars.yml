@@ -1,0 +1,5 @@
+vcenter_server: "vcenter.teste.br"
+datacenter_name: "TESTE"
+cluster_name: "CLUSTER_TESTE"
+vcenter_user: "usuario"
+vcenter_pass: senha
