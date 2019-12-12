@@ -32,6 +32,13 @@
           - 192.168.0.2
         dns_suffix:
           - teste.br
+      customization:
+        domain: teste.br
+        dns_servers:
+          - 192.168.0.1
+          - 192.168.0.2
+        dns_suffix:
+          - teste.br
       state: poweredon
       wait_for_ip_address: yes
     delegate_to: localhost
