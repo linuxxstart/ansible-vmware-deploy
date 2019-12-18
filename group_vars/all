@@ -1,0 +1,12 @@
+ansible_connection: vmware_tools
+ansible_vmware_host: vcenter.teste.br
+datacenter_name: "teste"
+cluster_name: "teste_HA"
+ansible_vmware_user: usuario@teste.br
+ansible_vmware_password: senha
+ansible_vmware_validate_certs: no
+ansible_vmware_guest_path: datacenter_name/vm/{{ inventory_hostname }}
+ansible_vmware_tools_user: root
+ansible_vmware_tools_password: senha
+docker_swarm_manager_ip: "192.168.0.1"
+docker_swarm_manager_port: "2377"

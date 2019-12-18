@@ -1,6 +1,6 @@
-# ansible-vmware-deploy
+# ansible-vmware
 
-Criação de vms no vCenter com o ansible.
+Criação de vms no vCenter e cluster swarm com o ansible.
 
 # Pré requisitos
 Matrix de compatibilidade dos sistemas operacionais das vms
@@ -18,24 +18,28 @@ Instalar o pip do python para instalar a API de conexão com o vCenter.
 sudo apt install python-pip
 sudo pip install pyvmomi
 ```
-# 1 Edita o arquivo com usuário e senha
+# 1 Criando variáveis
 
 Depois de clonar o repositório edite o arquivo.
 ```
-sudo vim vcenter-vars.yml
+$ vim group_vars/all
 ```
 Encripitar essas informções. Vai pedir para definir uma senha, pode ser qualquer uma, ela será pedida na exeção do playbook.
 ```
-sudo ansible-vault encrypt vcenter-vars.yml
+$ ansible-vault encrypt group_vars/all
 ```
 
-# 2 Edite infos que precisar no playbook
+# 2 Edite infos que precisar nos arquivos abaixo
 
 ```
-sudo vim /etc/ansible/playbooks/vcenter-task.yml
+$ vim vms_deploy
+$ vim main.yml
+$ vim roles/vms/tasks/main.yml
+$ vim roles/manager/tasks/main.yml
+$ vim roles/worker/tasks/main.yml
 ```
 
 # 3 Executar  o playbook
 ```
-sudo ansible-playbook -i vms_deploy vcenter-task.yml --ask-vault-pass -K
+$ ansible-playbook -i vms_deploy main.yml --ask-vault-pass -K
 ```

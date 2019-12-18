@@ -1,0 +1,16 @@
+
+  - name: Cirando vms
+    hosts: all
+    gather_facts: no
+    roles:
+      - vms
+ 
+  - name: Configurando Managers
+    hosts: docker_swarm_manager
+    roles:
+      - manager
+
+  - name: Configurando Workers
+    hosts: docker_swarm_manager:docker_swarm_worker
+    roles:
+      - worker
