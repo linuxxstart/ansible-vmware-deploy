@@ -1,12 +1,26 @@
 ansible_connection: vmware_tools
-ansible_vmware_host: vcenter.teste.br
-datacenter_name: "teste"
-cluster_name: "teste_HA"
-ansible_vmware_user: usuario@teste.br
-ansible_vmware_password: senha
+ansible_python_interpreter: /usr/bin/python3
+ansible_vmware_host: vcenter.local.br
+datacenter_name: "Datacenter"
+#host_name: "vmware.local.br"
+cluster_name: local
+ansible_vmware_user: everton@vsphere.local
+ansible_vmware_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          37336165383661613135623030333266386533336338646131396434366434633031303938383831
+          6131373133613935643630626139653962303133316365350a363461323835356166653064663138
+          33363033353731356333663164326366323938333262303333376130653133353962623533356137
+          3835616438353061370a313561396330356332333634663236343537383136643338643566626463
+          6337
 ansible_vmware_validate_certs: no
-ansible_vmware_guest_path: datacenter_name/vm/{{ inventory_hostname }}
+ansible_vmware_guest_path: Datacenter/vm/Docker/{{ inventory_hostname }}
 ansible_vmware_tools_user: root
-ansible_vmware_tools_password: senha
-docker_swarm_manager_ip: "192.168.0.1"
+ansible_vmware_tools_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          31626335353238663730643639323633643838343335373762326561646166386533346463343764
+          3665626234306236623764636265323230313731373463350a353039303039393933616139613133
+          39363538376563383761623165326462313932316562663331306432373265626539313130323063
+          3637646535313737360a303965653936333362663737386536323834613732613335623061613735
+          3861
+docker_swarm_manager_ip: "10.90.0.211"
 docker_swarm_manager_port: "2377"

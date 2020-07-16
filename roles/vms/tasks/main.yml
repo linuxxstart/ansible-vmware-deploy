@@ -1,71 +1,57 @@
-  - name: "Criando vms"
-    vmware_guest:
-      hostname: "{{ ansible_vmware_host }}"
-      username: "{{ ansible_vmware_user }}"
-      password: "{{ ansible_vmware_password }}"
-      validate_certs: False
-      name: "{{ inventory_hostname }}"
-      template: template-ubuntu18.04
-      datacenter: "{{ datacenter_name }}"
-      folder: /{{ datacenter_name }}/vm
-      cluster: "{{ cluster_name }}"
-      datastore: "{{ vsphere_datastore }}"
-      hardware:
-        memory_mb: 4096
-        num_cpus: 6
-        num_cpu_cores_per_socket: 3
-        hotadd_cpu: True
-        hotadd_memory: True
-      networks:
-      - name: nome_rede
-        ip: "{{ guest_custom_ip }}"
-        netmask: 255.255.255.0
-        gateway: 192.168.0.1
-        type: static
-        dns_servers: 
-          - 192.168.0.1
-          - 192.168.0.1
-        dns_suffix:
-          - teste.br
-      customization:
-        domain: teste.br
-        dns_servers:
-          - 192.168.0.1
-          - 192.168.0.2
-        dns_suffix:
-          - teste.br
-      state: poweredon
-      wait_for_ip_address: yes
-    delegate_to: localhost
-    
-  - name: "Trocando o hostname"
-    vmware_vm_shell:
-      hostname: "{{ ansible_vmware_host }}"
-      username: "{{ ansible_vmware_user }}"
-      password: "{{ ansible_vmware_password }}"
-      validate_certs: False
-      datacenter: "{{ datacenter_name }}"
-      folder: "/{{datacenter_name}}/vm"
-      vm_id: "{{ inventory_hostname }}"
-      vm_username: "{{ ansible_vmware_tools_user }}"
-      vm_password: "{{ ansible_vmware_tools_password }}"
-      vm_shell: "/usr/bin/hostnamectl"
-      vm_shell_args: "set-hostname {{ inventory_hostname }} > /tmp/$$.txt 2>&1"
-      wait_for_process: True
-    delegate_to: localhost
+- name: "Criando vms"
+  vmware_guest:
+    hostname: "{{ ansible_vmware_host }}"
+    username: "{{ ansible_vmware_user }}"
+    password: "{{ ansible_vmware_password }}"
+    validate_certs: False
+    name: "{{ inventory_hostname }}"
+    template: ubuntu-docker
+    datacenter: "{{ datacenter_name }}"
+    folder: /{{ datacenter_name }}/vm/Docker
+    #esxi_hostname: "{{ host_name }}"
+    cluster: "{{ cluster_name }}"
+    datastore: "{{ vsphere_datastore }}"
+    disk: 
+    - size_gb: 32
+      type: thin
+    hardware:
+      memory_mb: 4096
+      num_cpus: 4
+      num_cpu_cores_per_socket: 2
+      hotadd_cpu: True
+      hotadd_memory: True
+    networks:
+    - name: vlan90
+      ip: "{{ guest_custom_ip }}"
+      netmask: 255.255.255.0
+      gateway: 10.90.0.1
+      type: static
+      dns_servers: 
+        - 10.90.0.230
+      dns_suffix:
+        - local.br
+    customization:
+      domain: local.br
+      dns_servers:
+        - 10.90.0.230
+      dns_suffix:
+        - local.br
+    state: poweredon
+    wait_for_ip_address: yes
+  delegate_to: localhost
 
-  - name: "Instalando docker"
-    vmware_vm_shell:
-      hostname: "{{ ansible_vmware_host }}"
-      username: "{{ ansible_vmware_user }}"
-      password: "{{ ansible_vmware_password }}"
-      validate_certs: False
-      datacenter: "{{ datacenter_name }}"
-      folder: "/{{datacenter_name}}/vm"
-      vm_id: "{{ inventory_hostname }}"
-      vm_username: "{{ ansible_vmware_tools_user }}"
-      vm_password: "{{ ansible_vmware_tools_password }}"
-      vm_shell: "/usr/bin/curl"
-      vm_shell_args: "-fsSL https://get.docker.com | sh > /tmp/$$.txt 2>&1"
-      wait_for_process: True
-    delegate_to: localhost
+- name: "Trocando o hostname"
+  vmware_vm_shell:
+    hostname: "{{ ansible_vmware_host }}"
+    username: "{{ ansible_vmware_user }}"
+    password: "{{ ansible_vmware_password }}"
+    validate_certs: False
+    datacenter: "{{ datacenter_name }}"
+    folder: "/{{datacenter_name}}/vm/Docker"
+    vm_id: "{{ inventory_hostname }}"
+    vm_username: "{{ ansible_vmware_tools_user }}"
+    vm_password: "{{ ansible_vmware_tools_password }}"
+    vm_shell: "/usr/bin/hostnamectl"
+    vm_shell_args: "set-hostname {{ inventory_hostname }} > /tmp/$$.txt 2>&1"
+    wait_for_process: True
+  delegate_to: localhost

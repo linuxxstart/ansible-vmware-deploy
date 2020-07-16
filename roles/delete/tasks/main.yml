@@ -1,0 +1,19 @@
+- name: Desligando vms
+  vmware_guest:
+    hostname: "{{ ansible_vmware_host }}"
+    username: "{{ ansible_vmware_user }}"
+    password: "{{ ansible_vmware_password }}"
+    validate_certs: False
+    name: "{{ inventory_hostname }}"
+    state: poweredoff
+  delegate_to: localhost
+
+- name: Excluindo cluster docker swarm
+  vmware_guest:
+    hostname: "{{ ansible_vmware_host }}"
+    username: "{{ ansible_vmware_user }}"
+    password: "{{ ansible_vmware_password }}"
+    validate_certs: False
+    name: "{{ inventory_hostname }}"
+    state: absent
+  delegate_to: localhost

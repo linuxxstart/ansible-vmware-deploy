@@ -1,5 +1,5 @@
 [docker_swarm_manager]
-ansible-ubuntu01 guest_custom_ip='192.168.0.1' vsphere_datastore='datastore01'
-ansible-ubuntu02 guest_custom_ip='192.168.0.2' vsphere_datastore='datastore01'
+docker1 guest_custom_ip='10.90.0.211' vsphere_datastore='datastore01'
 [docker_swarm_worker]
-ansible-ubuntu03 guest_custom_ip='192.168.0.3' vsphere_datastore='datastore01'
+docker2 guest_custom_ip='10.90.0.212' vsphere_datastore='datastore01'
+docker3 guest_custom_ip='10.90.0.213' vsphere_datastore='datastore01'
