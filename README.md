@@ -57,7 +57,12 @@ $ vim roles/manager/tasks/main.yml
 $ vim roles/worker/tasks/main.yml
 ```
 
-# 3 Executar  o playbook
+# 3 Executar o playbook
 ```
 $ ansible-playbook -i vms_deploy main.yml --ask-vault-pass
+```
+
+# 4 Deletando as VMs
+```
+ansible-playbook -i vms_deploy delete.yml --ask-vault-pass
 ```
