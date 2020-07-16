@@ -64,5 +64,5 @@ $ ansible-playbook -i vms_deploy main.yml --ask-vault-pass
 
 # 4 Deletando as VMs
 ```
-ansible-playbook -i vms_deploy delete.yml --ask-vault-pass
+$ ansible-playbook -i vms_deploy delete.yml --ask-vault-pass
 ```
